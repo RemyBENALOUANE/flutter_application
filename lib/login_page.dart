@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'navigation_wrapper.dart';
 
 class LoginPage extends StatefulWidget {
@@ -20,31 +20,33 @@ class _LoginPageState extends State<LoginPage> {
       try {
         // Accéder à la collection "users" dans Firestore et chercher l'utilisateur avec l'email donné
         final QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
-            .collection('users')
+            .collection('user')
             .where('login', isEqualTo: email)
             .where('password', isEqualTo: password)
             .get();
 
         // Vérifier si un utilisateur correspondant à l'email donné existe
         if (snapshot.docs.isNotEmpty) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Connexion'),
-                duration: Duration(seconds: 1),
-              ),
-            );
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => NavigationWrapper()),
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Identifiant ou mot de passe incorrect'),
-                duration: Duration(seconds: 2),
-              ),
-            );
-          }
+          final userId = snapshot.docs.first.id; // Récupérer l'ID de l'utilisateur connecté
+          print("ID utilisateur: $userId'");
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Connexion'),
+              duration: Duration(seconds: 1),
+            ),
+          );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => NavigationWrapper(userId: userId)),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Identifiant ou mot de passe incorrect'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
       } catch (error) {
         print('Erreur lors de la connexion: $error');
       }

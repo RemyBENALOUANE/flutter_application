@@ -135,8 +135,8 @@ class _PanierPageState extends State<PanierPage> {
               alignment: Alignment.center,
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(10),
+                color: Color.fromARGB(118, 0, 62, 156),
+                borderRadius: BorderRadius.circular(40),
               ),
               child: RichText(
                 text: TextSpan(
@@ -148,14 +148,16 @@ class _PanierPageState extends State<PanierPage> {
                     TextSpan(
                       text: 'Prix Total : ',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 20,
+                        color: Color.fromARGB(255, 0, 62, 156)
                       ),
                     ),
                     TextSpan(
                       text: '$prixTotal €',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                        fontSize: 24,
+                        color: Color.fromARGB(255, 0, 62, 156)
                       ),
                     ),
                   ],
@@ -249,7 +251,7 @@ class _PanierPageState extends State<PanierPage> {
                       onPressed: () {
                         deleteToPanier(listDuPanier[index].dataModelId);
                       },
-                      icon: Icon(Icons.cancel_outlined),
+                      icon: Icon(Icons.delete),
                       color: Colors.red,
                     ),
                   ),

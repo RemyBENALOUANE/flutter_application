@@ -4,6 +4,11 @@ import 'panier_page.dart';
 import 'profil_page.dart';
 
 class NavigationWrapper extends StatefulWidget {
+
+  final String userId; // Ajoutez un champ pour l'ID de l'utilisateur
+
+  NavigationWrapper({Key? key, required this.userId}) : super(key: key);
+
   @override
   _NavigationWrapperState createState() => _NavigationWrapperState();
 }
@@ -11,11 +16,17 @@ class NavigationWrapper extends StatefulWidget {
 class _NavigationWrapperState extends State<NavigationWrapper> {
   int _selectedIndex = 0;
 
-  static List<Widget> _widgetOptions = <Widget>[
-    ActivityPage(),
-    PanierPage(),
-    ProfilPage(),
-  ];
+  List<Widget> _widgetOptions = <Widget>[]; // Supprimez static
+
+  @override
+  void initState() {
+    super.initState();
+    _widgetOptions = <Widget>[
+      ActivityPage(userId: widget.userId), // Utilisez widget.userId ici
+      PanierPage(),
+      ProfilPage(),
+    ];
+  }
 
   void _onItemTapped(int index) {
     setState(() {
