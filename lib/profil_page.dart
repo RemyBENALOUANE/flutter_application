@@ -1,27 +1,39 @@
 import 'package:flutter/material.dart';
 
-class ProfilPage extends StatefulWidget {
-  const ProfilPage({super.key});
+class ProfilPage extends StatelessWidget {
+  const ProfilPage({Key? key}) : super(key: key);
 
-  @override
-  State<ProfilPage> createState() => _ProfilPageState();
-}
-
-class _ProfilPageState extends State<ProfilPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        flexibleSpace: Container(
-          color: Color.fromARGB(255, 0, 62, 156), // Couleur de fond du headerBar
-          child: Center(
-            child: Image.asset(
-              '../assets/logo.png', // Remplacez ceci par le chemin de votre logo
-              height: 80, // Ajustez selon votre préférence
+    return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Identifiant:',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
+            TextFormField(
+              readOnly: false, // Permet à l'utilisateur de modifier le champ
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Mot de passe:',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            TextFormField(
+              obscureText: true, // Cache le texte pour le champ Mot de passe
+              readOnly: false, // Permet à l'utilisateur de modifier le champ
+            ),
+          ],
         ),
-      ),
-    );
+      );
   }
 }

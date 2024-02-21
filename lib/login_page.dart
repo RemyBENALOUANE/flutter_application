@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'activity_page.dart';
+import 'navigation_wrapper.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key});
@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
             );
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ActivityPage()),
+              MaterialPageRoute(builder: (context) => NavigationWrapper()),
             );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
               decoration: const InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.mail_rounded, color: Color.fromARGB(255, 0, 53, 167))
+                prefixIcon: Icon(Icons.mail_rounded, color: Color.fromARGB(255, 0, 62, 156))
               ),
             ),
             const SizedBox(height: 16.0),
@@ -95,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
               decoration: const InputDecoration(
                 labelText: 'Mot de passe',
                 border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.lock, color: Color.fromARGB(255, 0, 53, 167))
+                prefixIcon: Icon(Icons.lock, color: Color.fromARGB(255, 0, 62, 156))
               ),
             ),
             const SizedBox(height: 16.0),

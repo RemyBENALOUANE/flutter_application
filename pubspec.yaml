@@ -39,6 +39,9 @@ dependencies:
   # firebase_auth: ^4.16.0
   cloud_firestore: ^4.15.4  # add dependency for Cloud Firestore
   firebase: ^9.0.3
+  getwidget: ^4.0.0
+  stacked_listview: ^1.0.4
+  add_to_cart_animation: ^2.0.3
 
 
 dev_dependencies:
