@@ -23,7 +23,7 @@ class _NavigationWrapperState extends State<NavigationWrapper> {
     super.initState();
     _widgetOptions = <Widget>[
       ActivityPage(userId: widget.userId), // Utilisez widget.userId ici
-      PanierPage(),
+      PanierPage(userId: widget.userId),
       ProfilPage(),
     ];
   }

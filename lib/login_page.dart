@@ -29,12 +29,6 @@ class _LoginPageState extends State<LoginPage> {
         if (snapshot.docs.isNotEmpty) {
           final userId = snapshot.docs.first.id; // Récupérer l'ID de l'utilisateur connecté
           print("ID utilisateur: $userId'");
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Connexion'),
-              duration: Duration(seconds: 1),
-            ),
-          );
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => NavigationWrapper(userId: userId)),
@@ -43,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Identifiant ou mot de passe incorrect'),
+              backgroundColor: Color.fromARGB(255, 0, 62, 156),
               duration: Duration(seconds: 2),
             ),
           );

@@ -45,7 +45,7 @@ class ActivityPage extends StatefulWidget {
 
 class _ActivityPageState extends State<ActivityPage> {
   late Future<List<Activity>> _activities;
-  late List<String> _userCartActivities;
+  late List<String> _userCartActivities = [];
 
   @override
   void initState() {
@@ -114,13 +114,13 @@ class _ActivityPageState extends State<ActivityPage> {
                   padding: const EdgeInsets.all(4.0),
                   child: Material(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(20),
                     ),
                     elevation: 5,
                     child: Stack(
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(20),
                           child: Image.network(
                             activities[index].image,
                             fit: BoxFit.cover,
@@ -206,8 +206,9 @@ class _ActivityPageState extends State<ActivityPage> {
                             onPressed: () {
                               if (_isActivityInUserCart(activities[index].id)) {
                                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                  content: Text('Cette activité est déjà dans votre panier.'),
+                                  content: Text('Cette activité est déjà dans votre panier'),
                                   backgroundColor: Color.fromARGB(255, 0, 62, 156),
+                                  duration: Duration(seconds: 2),
                                 ));
                               } else {
                                 _addToCart(widget.userId, activities[index].id);
