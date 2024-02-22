@@ -45,11 +45,13 @@ class ActivityPage extends StatefulWidget {
 
 class _ActivityPageState extends State<ActivityPage> {
   late Future<List<Activity>> _activities;
+  late List<String> _userCartActivities;
 
   @override
   void initState() {
     super.initState();
     _activities = _getActivitiesFromFirestore();
+    _getUserCartActivities();
   }
 
   Future<List<Activity>> _getActivitiesFromFirestore() async {
@@ -62,33 +64,31 @@ class _ActivityPageState extends State<ActivityPage> {
 
   Future<void> _addToCart(String userId, String activityId) async {
     try {
-      final alreadyInCart = await _isActivityInCart(userId, activityId);
-      if (alreadyInCart) {
-        print('L\'activité est déjà dans le panier!');
-      } else {
-        await FirebaseFirestore.instance.collection('panier').add({
-          'userId': userId,
-          'activityId': activityId,
-        });
-        print('Activité ajoutée au panier avec succès!');
-      }
+      await FirebaseFirestore.instance.collection('panier').add({
+        'userId': userId,
+        'activityId': activityId,
+      });
+      print('Activité ajoutée au panier avec succès!');
+      _getUserCartActivities(); // Actualiser la liste des activités dans le panier après l'ajout
     } catch (e) {
       print('Erreur lors de l\'ajout de l\'activité au panier: $e');
     }
   }
 
-  Future<bool> _isActivityInCart(String userId, String activityId) async {
-    try {
-      final querySnapshot = await FirebaseFirestore.instance
-          .collection('panier')
-          .where('userId', isEqualTo: userId)
-          .where('activityId', isEqualTo: activityId)
-          .get();
-      return querySnapshot.docs.isNotEmpty;
-    } catch (e) {
-      print('Erreur lors de la vérification de l\'activité dans le panier: $e');
-      return false;
-    }
+  Future<void> _getUserCartActivities() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('panier')
+        .where('userId', isEqualTo: widget.userId)
+        .get();
+    setState(() {
+      _userCartActivities = querySnapshot.docs
+          .map((doc) => doc['activityId'] as String)
+          .toList();
+    });
+  }
+
+  bool _isActivityInUserCart(String activityId) {
+    return _userCartActivities.contains(activityId);
   }
 
   @override
@@ -204,10 +204,23 @@ class _ActivityPageState extends State<ActivityPage> {
                           right: 8,
                           child: IconButton(
                             onPressed: () {
-                              _addToCart(widget.userId, activities[index].id);
+                              if (_isActivityInUserCart(activities[index].id)) {
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  content: Text('Cette activité est déjà dans votre panier.'),
+                                  backgroundColor: Color.fromARGB(255, 0, 62, 156),
+                                ));
+                              } else {
+                                _addToCart(widget.userId, activities[index].id);
+                              }
                             },
-                            icon: Icon(Icons.shopping_cart_outlined),
-                            color: Colors.white,
+                            icon: Icon(
+                              _isActivityInUserCart(activities[index].id)
+                                  ? Icons.shopping_cart
+                                  : Icons.shopping_cart_outlined,
+                            ),
+                            color: _isActivityInUserCart(activities[index].id)
+                                ? Colors.green
+                                : Colors.white,
                           ),
                         ),
                       ],
