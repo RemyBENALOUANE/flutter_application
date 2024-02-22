@@ -35,7 +35,6 @@ class Activity {
 }
 
 class ActivityPage extends StatefulWidget {
-
   final String userId;
 
   const ActivityPage({Key? key, required this.userId}) : super(key: key);
@@ -60,6 +59,19 @@ class _ActivityPageState extends State<ActivityPage> {
         .map((doc) => Activity.fromFirestore(doc))
         .toList();
   }
+
+  Future<void> _addToCart(String userId, String activityId) async {
+    try {
+      await FirebaseFirestore.instance.collection('panier').add({
+        'userId': userId,
+        'activityId': activityId,
+      });
+      print('Activité ajoutée au panier avec succès!');
+    } catch (e) {
+      print('Erreur lors de l\'ajout de l\'activité au panier: $e');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -163,8 +175,7 @@ class _ActivityPageState extends State<ActivityPage> {
                           right: 48,
                           child: IconButton(
                             onPressed: () {
-                              print(
-                                  '${widget.userId}');
+                              print('${widget.userId}');
                             },
                             icon: Icon(Icons.info_outline),
                             color: Colors.white,
@@ -175,11 +186,10 @@ class _ActivityPageState extends State<ActivityPage> {
                           right: 8,
                           child: IconButton(
                             onPressed: () {
-                              // Tâches à exécuter lors du clic sur le panier
-                              print('Clic sur le panier de l\'activité ${activities[index].titre}');
+                              _addToCart(widget.userId, activities[index].id);
                             },
                             icon: Icon(Icons.shopping_cart_outlined),
-                            color: Colors.white, // Sinon, couleur blanche
+                            color: Colors.white,
                           ),
                         ),
                       ],
