@@ -62,16 +62,34 @@ class _ActivityPageState extends State<ActivityPage> {
 
   Future<void> _addToCart(String userId, String activityId) async {
     try {
-      await FirebaseFirestore.instance.collection('panier').add({
-        'userId': userId,
-        'activityId': activityId,
-      });
-      print('Activité ajoutée au panier avec succès!');
+      final alreadyInCart = await _isActivityInCart(userId, activityId);
+      if (alreadyInCart) {
+        print('L\'activité est déjà dans le panier!');
+      } else {
+        await FirebaseFirestore.instance.collection('panier').add({
+          'userId': userId,
+          'activityId': activityId,
+        });
+        print('Activité ajoutée au panier avec succès!');
+      }
     } catch (e) {
       print('Erreur lors de l\'ajout de l\'activité au panier: $e');
     }
   }
 
+  Future<bool> _isActivityInCart(String userId, String activityId) async {
+    try {
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('panier')
+          .where('userId', isEqualTo: userId)
+          .where('activityId', isEqualTo: activityId)
+          .get();
+      return querySnapshot.docs.isNotEmpty;
+    } catch (e) {
+      print('Erreur lors de la vérification de l\'activité dans le panier: $e');
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
