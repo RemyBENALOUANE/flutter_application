@@ -69,9 +69,11 @@ class _PanierPageState extends State<PanierPage> {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           return Container(
-                            width: 24,
-                            height: 24,
-                            child: CircularProgressIndicator(),
+                            width: 2,
+                            height: 200,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 0, 62, 156)),
+                            ),
                           );
                         }
                         if (snapshot.hasError) {

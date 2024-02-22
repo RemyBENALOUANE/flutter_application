@@ -10,22 +10,22 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _identifiantController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   Future<void> loginFunction(BuildContext context) async {
-      final String email = _emailController.text.trim();
+      final String identifiant = _identifiantController.text.trim();
       final String password = _passwordController.text.trim();
 
       try {
-        // Accéder à la collection "users" dans Firestore et chercher l'utilisateur avec l'email donné
+        // Accéder à la collection "users" dans Firestore et chercher l'utilisateur avec l'identifiant donné
         final QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
             .collection('user')
-            .where('login', isEqualTo: email)
+            .where('login', isEqualTo: identifiant)
             .where('password', isEqualTo: password)
             .get();
 
-        // Vérifier si un utilisateur correspondant à l'email donné existe
+        // Vérifier si un utilisateur correspondant à l'identifiant donné existe
         if (snapshot.docs.isNotEmpty) {
           final userId = snapshot.docs.first.id; // Récupérer l'ID de l'utilisateur connecté
           print("ID utilisateur: $userId'");
@@ -78,11 +78,12 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 20.0),
             TextField(
-              controller: _emailController,
+              controller: _identifiantController,
               decoration: const InputDecoration(
-                labelText: 'Email',
+                labelText: 'Identifiant',
                 border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.mail_rounded, color: Color.fromARGB(255, 0, 62, 156))
+                prefixIcon: Icon(Icons.mail_rounded, color: Color.fromARGB(255, 0, 62, 156)),
+                labelStyle: TextStyle(color: Color.fromARGB(255, 0, 62, 156)),
               ),
             ),
             const SizedBox(height: 16.0),
@@ -92,13 +93,17 @@ class _LoginPageState extends State<LoginPage> {
               decoration: const InputDecoration(
                 labelText: 'Mot de passe',
                 border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.lock, color: Color.fromARGB(255, 0, 62, 156))
+                prefixIcon: Icon(Icons.lock, color: Color.fromARGB(255, 0, 62, 156)),
+                labelStyle: TextStyle(color: Color.fromARGB(255, 0, 62, 156)),
               ),
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () => loginFunction(context),
-              child: const Text('Se connecter'),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white, backgroundColor: Color.fromARGB(255, 0, 62, 156), // Couleur de texte blanc
+              ),
+              child: const Text('Se connecter', style: TextStyle(color: Colors.white)),
             ),
           ],
         ),
