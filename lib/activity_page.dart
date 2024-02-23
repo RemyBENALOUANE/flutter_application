@@ -8,7 +8,7 @@ class Activity {
   final String theme;
   final double prix;
   final String lieu;
-  final int nombreMinimumPersonnes;
+  final int nombrePersonnesMin;
 
   Activity({
     required this.id,
@@ -17,7 +17,7 @@ class Activity {
     required this.theme,
     required this.prix,
     required this.lieu,
-    required this.nombreMinimumPersonnes,
+    required this.nombrePersonnesMin,
   });
 
   factory Activity.fromFirestore(DocumentSnapshot doc) {
@@ -29,7 +29,7 @@ class Activity {
       theme: data['theme'] ?? '',
       prix: data['prix'] ?? 0.0,
       lieu: data['lieu'] ?? '',
-      nombreMinimumPersonnes: data['nombreMinimumPersonnes'] ?? 0,
+      nombrePersonnesMin: data['nombrePersonnesMin'] ?? 0,
     );
   }
 }
@@ -192,12 +192,148 @@ class _ActivityPageState extends State<ActivityPage> {
                           bottom: 8,
                           right: 48,
                           child: IconButton(
-                            onPressed: () {
-                              print('${widget.userId}');
-                            },
-                            icon: Icon(Icons.info_outline),
-                            color: Colors.white,
-                          ),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  contentPadding: EdgeInsets.all(20), // Ajustez le padding selon vos besoins
+                                  title: Text(
+                                    'Détails de l\'activité',
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 0, 62, 156),
+                                    ),
+                                  ),
+                                  content: SingleChildScrollView(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        SizedBox(
+                                          width: double.infinity,
+                                          height: 300, // Ajustez la hauteur de l'image selon vos besoins
+                                          child: Image.network(
+                                            activities[index].image,
+                                            fit: BoxFit.cover,
+                                            errorBuilder: (context, error, stackTrace) {
+                                              return Icon(Icons.error); // Affiche une icône d'erreur en cas d'échec de chargement de l'image
+                                            },
+                                          ),
+                                        ),
+                                        SizedBox(height: 8),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Titre: ',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16, // Ajustez la taille du texte selon vos besoins
+                                                color: Color.fromARGB(255, 0, 62, 156),
+                                              ),
+                                            ),
+                                            Text(
+                                              '${activities[index].titre}',
+                                              style: TextStyle(
+                                                fontSize: 16, // Ajustez la taille du texte selon vos besoins
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Thème: ',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                                color: Color.fromARGB(255, 0, 62, 156), // Ajustez la taille du texte selon vos besoins
+                                              ),
+                                            ),
+                                            Text(
+                                              '${activities[index].theme}',
+                                              style: TextStyle(
+                                                fontSize: 16, // Ajustez la taille du texte selon vos besoins
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Lieu: ',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                                color: Color.fromARGB(255, 0, 62, 156), // Ajustez la taille du texte selon vos besoins
+                                              ),
+                                            ),
+                                            Text(
+                                              '${activities[index].lieu}',
+                                              style: TextStyle(
+                                                fontSize: 16, // Ajustez la taille du texte selon vos besoins
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Prix: ',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                                color: Color.fromARGB(255, 0, 62, 156), // Ajustez la taille du texte selon vos besoins
+                                              ),
+                                            ),
+                                            Text(
+                                              '${activities[index].prix} €',
+                                              style: TextStyle(
+                                                fontSize: 16, // Ajustez la taille du texte selon vos besoins
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Nombre de personnes minimum: ',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                                color: Color.fromARGB(255, 0, 62, 156), // Ajustez la taille du texte selon vos besoins
+                                              ),
+                                            ),
+                                            Text(
+                                              '${activities[index].nombrePersonnesMin}',
+                                              style: TextStyle(
+                                                fontSize: 18, // Ajustez la taille du texte selon vos besoins
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(
+                                        'Fermer',
+                                        style: TextStyle(
+                                          color: Color.fromARGB(255, 0, 62, 156),
+                                          fontSize: 18, // Ajustez la taille du texte selon vos besoins
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          icon: Icon(Icons.info_outline),
+                          color: Colors.white,
+                        ),
                         ),
                         Positioned(
                           bottom: 8,
