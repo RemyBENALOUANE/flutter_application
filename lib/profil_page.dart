@@ -206,10 +206,10 @@ class _ProfilPageState extends State<ProfilPage> {
 
   void updateUserData() async {
     // Vérifier si le code postal est un nombre
-    if (!isNumeric(_codePostalController.text)) {
+    if (!isPostalCode(_codePostalController.text)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Le code postal doit être un nombre'),
+          content: Text('Le code postal doit être un nombre à 5 chiffres'),
           backgroundColor: Color.fromARGB(255, 228, 0, 0),
           duration: Duration(seconds: 4),
         ),
@@ -237,10 +237,21 @@ class _ProfilPageState extends State<ProfilPage> {
   }
 
   // Fonction utilitaire pour vérifier si une chaîne est numérique
-  bool isNumeric(String s) {
-    if (s == null) {
+  bool isPostalCode(String s) {
+    if (s == null || s.isEmpty) {
       return false;
     }
-    return double.tryParse(s) != null;
+    
+    // Vérifier si la chaîne est numérique
+    if (double.tryParse(s) == null) {
+      return false;
+    }
+    
+    // Vérifier si la longueur de la chaîne est égale à 5
+    if (s.length != 5) {
+      return false;
+    }
+    
+    return true;
   }
 }
