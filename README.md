@@ -24,7 +24,7 @@ Cette application Flutter permet aux utilisateurs de découvrir et de participer
 
 - **Logo :** Un logo distinctif a été ajouté pour l'application, offrant une identité visuelle reconnaissable.
 
-- **Filtre dynamiques :** Les filtres sont dynamiques: on peut ajouter plusieurs filtre en même temps et les désélectionner.
+- **Filtres dynamiques :** Les filtres sont dynamiques: on peut ajouter plusieurs filtre en même temps et les désélectionner.
 
 - **Panier associé à un utlisateur :** Chaque panier est associé à un utilisateur unique.
   
