@@ -40,10 +40,14 @@ L'application est connectée à Firebase pour stocker les données utilisateur, 
 
 ## Captures d'Écran
 
-![Capture d'écran 1](../flutter_application/Ressources/Capture%20d'écran%202024-02-26%20161642.png)
-![Capture d'écran 2](../flutter_application/Ressources/Capture%20d'écran%202024-02-26%20161734.png)
-![Capture d'écran 3](../flutter_application/Ressources/Capture%20d'écran%202024-02-26%20161753.png)
-![Capture d'écran 4](../flutter_application/Ressources/Capture%20d'écran%202024-02-26%20164543.png)
+<img width="936" alt="Capture d'écran 2024-02-26 161642" src="https://github.com/RemyBENALOUANE/flutter_application/assets/66668680/234adbb0-8d89-4665-9237-64ea1015af5f">
+
+<img width="932" alt="Capture d'écran 2024-02-26 161734" src="https://github.com/RemyBENALOUANE/flutter_application/assets/66668680/a6ac4965-ffc6-498d-9f5d-f011d1feecfa">
+
+<img width="935" alt="Capture d'écran 2024-02-26 161753" src="https://github.com/RemyBENALOUANE/flutter_application/assets/66668680/c1ef0a2a-346d-4f5b-bebc-77ab3f0c85db">
+
+<img width="932" alt="Capture d'écran 2024-02-26 164543" src="https://github.com/RemyBENALOUANE/flutter_application/assets/66668680/dd8329f4-bb15-4ef0-92b7-5cd59e4613f2">
+
 
 ## Captures d'Écran de la Base de Données
 
