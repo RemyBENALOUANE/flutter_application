@@ -23,10 +23,12 @@ Cette application Flutter permet aux utilisateurs de découvrir et de participer
 ## Détails Additionnels
 
 - **Logo :** Un logo distinctif a été ajouté pour l'application, offrant une identité visuelle reconnaissable.
-  
-- **Vérification du Code Postal :** Un contrôle est effectué lors de la saisie du code postal pour s'assurer qu'il comporte bien 5 chiffres.
+
+- **Filtre dynamiques :** Les filtres sont dynamiques: on peut ajouter plusieurs filtre en même temps et les désélectionner.
 
 - **Panier associé à un utlisateur :** Chaque panier est associé à un utilisateur unique.
+  
+- **Vérification du Code Postal :** Un contrôle est effectué lors de la saisie du code postal pour s'assurer qu'il comporte bien 5 chiffres.
 
 - **Messages d'erreur :** Des messages d'erreur ou de succès apparaissent à différents moments pour informer l'utilisateur.
 
