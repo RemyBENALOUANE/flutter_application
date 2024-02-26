@@ -185,7 +185,7 @@ class _ProfilPageState extends State<ProfilPage> {
         ),
       ),
       bottomNavigationBar: Container(
-        color: Colors.red,
+        color: Color.fromARGB(162, 228, 0, 0),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ElevatedButton(
@@ -194,7 +194,7 @@ class _ProfilPageState extends State<ProfilPage> {
               logoutFunction();
             },
             style: ElevatedButton.styleFrom(
-              primary: Colors.red,
+              primary: Color.fromARGB(255, 228, 0, 0),
               onPrimary: Colors.white,
             ),
             child: Text('Se déconnecter'),
@@ -205,6 +205,18 @@ class _ProfilPageState extends State<ProfilPage> {
   }
 
   void updateUserData() async {
+    // Vérifier si le code postal est un nombre
+    if (!isNumeric(_codePostalController.text)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Le code postal doit être un nombre'),
+          backgroundColor: Color.fromARGB(255, 228, 0, 0),
+          duration: Duration(seconds: 4),
+        ),
+      );
+      return;
+    }
+
     // Mettre à jour les données de l'utilisateur sur Firebase
     await FirebaseFirestore.instance.collection('user').doc(widget.userId).set({
       'login': _loginController.text,
@@ -215,33 +227,20 @@ class _ProfilPageState extends State<ProfilPage> {
       'ville': _villeController.text,
     }, SetOptions(merge: true));
 
-    // Afficher une boîte de dialogue pour indiquer que les données ont été mises à jour
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            'Sauvegardé',
-            style: TextStyle(
-              color: Color.fromARGB(255, 0, 62, 156), // Couleur bleue pour le titre
-            ),
-          ),
-          content: Text('Les informations du profil ont été mises à jour'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                'OK',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 0, 62, 156), // Couleur bleue pour le texte du bouton
-                ),
-              ),
-            ),
-          ],
-        );
-      },
+    // Afficher un snackbar pour indiquer que les données ont été mises à jour
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Les informations du profil ont été mises à jour'),
+        backgroundColor: Color.fromARGB(255, 0, 62, 156),
+      ),
     );
+  }
+
+  // Fonction utilitaire pour vérifier si une chaîne est numérique
+  bool isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+    return double.tryParse(s) != null;
   }
 }
